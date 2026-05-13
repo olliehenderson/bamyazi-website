@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>bamyazi - AI advisory + build for leadership teams</title>
+<meta name="description" content="We help leadership teams work out what to do about AI, then help them actually do it. Mostly at mid-sized companies and scale-ups.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F5F0EA;
+    --ink: #0A0A0A;
+    --ink-soft: #2A2A2A;
+    --forest: #2E4A1F;
+    --forest-deep: #1F3314;
+    --muted: #767676;
+    --rule: rgba(10, 10, 10, 0.18);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background: var(--forest);
+    color: var(--paper);
+  }
+
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 36px;
+  }
+
+  /* Header */
+  .header {
+    padding: 36px 0 20px;
+  }
+
+  .wordmark {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .slash {
+    color: var(--forest);
+  }
+
+  /* Section nav */
+  .section-nav {
+    padding: 12px 0 16px;
+    border-top: 1px dashed var(--rule);
+    border-bottom: 1px dashed var(--rule);
+  }
+
+  .section-nav .container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    font-size: 12px;
+    line-height: 1.8;
+  }
+
+  .section-nav a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .section-nav a:hover {
+    color: var(--forest);
+  }
+
+  .section-nav .sep {
+    color: var(--forest);
+    margin: 0 10px;
+  }
+
+  /* Hero */
+  .hero {
+    padding: 88px 0 72px;
+    border-bottom: 1px dashed var(--rule);
+  }
+
+  .label {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--forest);
+    margin-bottom: 36px;
+  }
+
+  .hero h1 {
+    font-size: clamp(2rem, 5.2vw, 3.4rem);
+    font-weight: 600;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    margin-bottom: 32px;
+    max-width: 720px;
+  }
+
+  .hero h1 .accent {
+    color: var(--forest);
+  }
+
+  .hero .sub {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.6;
+    max-width: 560px;
+    color: var(--ink-soft);
+  }
+
+  /* Sections */
+  .section {
+    padding: 72px 0;
+    border-bottom: 1px dashed var(--rule);
+  }
+
+  .section-head {
+    margin-bottom: 40px;
+  }
+
+  .section-num {
+    font-size: 26px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    color: var(--forest);
+    display: block;
+    margin-bottom: 6px;
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+  }
+
+  .section-title {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    display: block;
+  }
+
+  .section p {
+    font-size: 16px;
+    line-height: 1.65;
+    margin-bottom: 22px;
+    max-width: 620px;
+  }
+
+  .section p:last-of-type {
+    margin-bottom: 0;
+  }
+
+  .section p strong,
+  .cta p strong {
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  /* Sub-blocks (vertical) */
+  .block {
+    padding: 28px 0;
+    border-top: 1px dashed var(--rule);
+  }
+
+  .block:last-child {
+    padding-bottom: 0;
+  }
+
+  .blocks-wrapper {
+    margin-top: 8px;
+  }
+
+  .block-label {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--forest);
+    margin-bottom: 14px;
+    display: block;
+  }
+
+  .block-body {
+    font-size: 15px;
+    line-height: 1.65;
+    max-width: 620px;
+    color: var(--ink-soft);
+  }
+
+  .block-body strong {
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  /* /02 modes grid - 2 columns on desktop with vertical separator */
+  .modes-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 8px;
+  }
+
+  .modes-grid > .block {
+    padding: 28px 24px 28px 0;
+    border-top: 1px dashed var(--rule);
+    border-right: 1px dashed var(--rule);
+  }
+
+  .modes-grid > .block:nth-child(even) {
+    padding-left: 24px;
+    padding-right: 0;
+    border-right: none;
+  }
+
+  .modes-grid > .block .block-body {
+    max-width: none;
+  }
+
+  /* Client list */
+  .client-list {
+    font-size: 15px;
+    line-height: 1.95;
+    max-width: 620px;
+    color: var(--ink-soft);
+  }
+
+  .client-list .dot {
+    color: var(--forest);
+    margin: 0 6px;
+    font-weight: 500;
+  }
+
+  /* Bio section */
+  .bio-lead {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 32px !important;
+  }
+
+  /* CTA */
+  .cta {
+    padding: 88px 0 72px;
+    border-bottom: 1px dashed var(--rule);
+  }
+
+  .cta p {
+    font-size: 18px;
+    line-height: 1.5;
+    margin-bottom: 36px;
+    max-width: 580px;
+    color: var(--ink);
+  }
+
+  .email-btn {
+    display: inline-flex;
+    align-items: center;
+    background: var(--forest);
+    color: var(--paper);
+    padding: 16px 24px;
+    text-decoration: none;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    transition: background 0.15s ease;
+    border: none;
+    cursor: pointer;
+  }
+
+  .email-btn:hover {
+    background: var(--forest-deep);
+  }
+
+  .email-btn .arrow {
+    margin-left: 14px;
+    transition: transform 0.15s ease;
+  }
+
+  .email-btn:hover .arrow {
+    transform: translateX(3px);
+  }
+
+  /* Footer */
+  .footer {
+    padding: 28px 0 56px;
+  }
+
+  .footer-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    font-size: 12px;
+    color: var(--muted);
+    align-items: center;
+  }
+
+  .footer a {
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .footer a:hover {
+    color: var(--forest);
+  }
+
+  .footer .col-center {
+    text-align: center;
+  }
+
+  .footer .col-right {
+    text-align: right;
+  }
+
+  em {
+    font-style: italic;
+  }
+
+  /* Mobile */
+  @media (max-width: 640px) {
+    .container {
+      padding: 0 24px;
+    }
+
+    .header {
+      padding: 24px 0 16px;
+    }
+
+    .section-nav {
+      padding: 10px 0 14px;
+    }
+
+    .section-nav .sep {
+      margin: 0 8px;
+    }
+
+    .hero {
+      padding: 56px 0 48px;
+    }
+
+    .section {
+      padding: 56px 0;
+    }
+
+    .cta {
+      padding: 64px 0 48px;
+    }
+
+    .section-head {
+      margin-bottom: 32px;
+    }
+
+    .section-num {
+      font-size: 22px;
+    }
+
+    .section p,
+    .cta p {
+      font-size: 15.5px;
+    }
+
+    .block {
+      padding: 24px 0;
+    }
+
+    .modes-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .modes-grid > .block {
+      padding: 24px 0;
+      border-right: none;
+    }
+
+    .modes-grid > .block:nth-child(even) {
+      padding-left: 0;
+    }
+
+    .footer-inner {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    .footer .col-center,
+    .footer .col-right {
+      text-align: left;
+    }
+
+    .email-btn {
+      padding: 14px 20px;
+      font-size: 13px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="container">
+    <a href="index.html" class="wordmark"><span class="slash">//</span>bamyazi</a>
+  </div>
+</header>
+
+<nav class="section-nav">
+  <div class="container">
+    <a href="#01">what we do</a>
+    <span class="sep">·</span>
+    <a href="#02">how we work</a>
+    <span class="sep">·</span>
+    <a href="#03">what we work on</a>
+    <span class="sep">·</span>
+    <a href="#04">clients</a>
+    <span class="sep">·</span>
+    <a href="#05">who</a>
+    <span class="sep">·</span>
+    <a href="#06">work with us</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <div class="label">[ advisory + build ]</div>
+    <h1>From AI ambition to <span class="accent">agents doing the work.</span></h1>
+    <p class="sub">We help leadership teams work out what to do about AI, then help them actually do it. Mostly at mid-sized companies and scale-ups.</p>
+  </div>
+</section>
+
+<section class="section" id="01">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-num">/ 01</span>
+      <span class="section-title">what we do</span>
+    </div>
+
+    <p>Most leadership teams already know AI matters. They're stuck on what to actually do about it.</p>
+    <p>It's a <strong>design problem more than a technology problem.</strong> The hard part is deciding which work should change, who trusts it once it does, and what happens when it goes wrong.</p>
+    <p>We rebuild how the business runs. With AI doing real work inside.</p>
+  </div>
+</section>
+
+<section class="section" id="02">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-num">/ 02</span>
+      <span class="section-title">how we work</span>
+    </div>
+
+    <p>We work at the level the problem needs - <strong>from a board briefing to a build sprint.</strong></p>
+
+    <div class="modes-grid">
+      <div class="block">
+        <span class="block-label">[ leadership briefings ]</span>
+        <div class="block-body">Keynotes or shorter sessions for execs and boards. A clear read on where AI actually is - what's real, what's overstated, what's worth doing. Half a day, usually.</div>
+      </div>
+
+      <div class="block">
+        <span class="block-label">[ workshops ]</span>
+        <div class="block-body">Sessions on how to actually use AI day-to-day. People leave with workflows, prompts and examples from their own work, not a generic tour of tools. 90 minutes to two days, in person where possible.</div>
+      </div>
+
+      <div class="block">
+        <span class="block-label">[ advisory + decision support ]</span>
+        <div class="block-body">For when you're making real calls about AI. Build versus buy. Which vendor. How to scope. How to run a proper proof of concept. Alongside your team while the decisions are live.</div>
+      </div>
+
+      <div class="block">
+        <span class="block-label">[ design + build ]</span>
+        <div class="block-body">When the problem is clear and you need to build something your team will actually use. Two to six weeks with senior people and engineers alongside. We design what should change first, then build it.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="03">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-num">/ 03</span>
+      <span class="section-title">what we work on</span>
+    </div>
+
+    <p>Our job is <strong>bridging what the business needs with what AI can actually do.</strong> The work usually starts with the workflow, then moves into AI-enabled steps, then into agents where the process is mature enough.</p>
+
+    <div class="blocks-wrapper">
+      <div class="block">
+        <span class="block-label">[ workflow redesign ]</span>
+        <div class="block-body">Mapping work as it currently runs, then rethinking what it should look like with AI in the mix. Stripping out steps that don't need to exist. Designing new flows that wouldn't have been possible before.</div>
+      </div>
+
+      <div class="block">
+        <span class="block-label">[ AI workflows ]</span>
+        <div class="block-body">AI handling specific steps in processes you already run. Pulling data from messy documents. Drafting client-ready first versions. Summarising long internal threads. Classifying inbound work and routing exceptions. Answering questions from policies, contracts, notes and previous decisions.</div>
+      </div>
+
+      <div class="block">
+        <span class="block-label">[ agentic workflows ]</span>
+        <div class="block-body">For teams with enough process discipline to make agents reliable. Multi-step workflows where agents handle the chasing, flagging and routing. Knowledge systems that show their working, cite sources and keep humans in the loop where judgement matters. Always with audit trails, approval gates and traceability built in from the start.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="04">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-num">/ 04</span>
+      <span class="section-title">clients</span>
+    </div>
+
+    <div class="blocks-wrapper" style="margin-top: 0;">
+      <div class="block">
+        <span class="block-label">[ names you'll know ]</span>
+        <div class="client-list">Coty<span class="dot">·</span>Freshfields<span class="dot">·</span>Google<span class="dot">·</span>HSBC<span class="dot">·</span>Mercer<span class="dot">·</span>Microsoft<span class="dot">·</span>Rentokil<span class="dot">·</span>Samsung<span class="dot">·</span>UK Government<span class="dot">·</span>Which?</div>
+      </div>
+
+      <div class="block">
+        <span class="block-label">[ and dozens you won't ]</span>
+        <div class="block-body">Mid-sized companies and scale-ups. Most of what we're doing now.</div>
+      </div>
+
+      <div class="block">
+        <span class="block-label">[ recent builds ]</span>
+        <div class="block-body">An AI workflow platform for the Lloyd's of London insurance market. Investment management platforms for wealth managers. Operational AI tools for a healthcare services business. All involving messy documents, regulated environments, and human judgement.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="05">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-num">/ 05</span>
+      <span class="section-title">who</span>
+    </div>
+
+    <p class="bio-lead">Ollie Henderson and Ashley Ford.</p>
+
+    <p>Ollie built and exited a digital agency, then ran a data and technology consultancy as CEO. He works with leadership teams on AI adoption and workflow redesign.</p>
+
+    <p>Host of the Ollie on Work podcast and newsletter - 250+ conversations on AI, work and leadership. Author of <em>Work/Life Flywheel</em>, Business Book Awards finalist 2024. Quoted in The Times and the FT.</p>
+
+    <p>Ashley is a CTO, senior engineer and product builder. He's founded and led product teams across consumer tech, media and financial services - building AI-enabled platforms where auditability and version control are critical.</p>
+  </div>
+</section>
+
+<section class="cta" id="06">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-num">/ 06</span>
+      <span class="section-title">work with us</span>
+    </div>
+
+    <p>If AI is on the leadership agenda <strong>but not yet changing how the business runs,</strong> get in touch.</p>
+
+    <a href="contact.html" class="email-btn">get in touch<span class="arrow">→</span></a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div><span class="slash">//</span>bamyazi</div>
+      <div class="col-center"><a href="https://ollieonwork.com"><span class="slash">//</span>ollie on work →</a></div>
+      <div class="col-right">london <span class="slash">/</span> 2026</div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

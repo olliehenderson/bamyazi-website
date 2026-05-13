@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>get in touch - bamyazi</title>
+<meta name="description" content="Tell us what's going on. We'll come back to you within a day or two.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F5F0EA;
+    --ink: #0A0A0A;
+    --ink-soft: #2A2A2A;
+    --forest: #2E4A1F;
+    --forest-deep: #1F3314;
+    --muted: #767676;
+    --rule: rgba(10, 10, 10, 0.18);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background: var(--forest);
+    color: var(--paper);
+  }
+
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 36px;
+  }
+
+  /* Header */
+  .header {
+    padding: 36px 0 20px;
+    border-bottom: 1px dashed var(--rule);
+  }
+
+  .wordmark {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .slash {
+    color: var(--forest);
+  }
+
+  /* Contact section */
+  .contact-section {
+    padding: 88px 0 96px;
+    border-bottom: 1px dashed var(--rule);
+  }
+
+  .label {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--forest);
+    margin-bottom: 36px;
+  }
+
+  .contact-section h1 {
+    font-size: clamp(1.75rem, 4.5vw, 2.6rem);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+    max-width: 620px;
+  }
+
+  .contact-section .sub {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.6;
+    max-width: 560px;
+    color: var(--ink-soft);
+    margin-bottom: 56px;
+  }
+
+  /* Form */
+  .contact-form {
+    max-width: 580px;
+  }
+
+  .field {
+    margin-bottom: 36px;
+  }
+
+  .field label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--forest);
+    margin-bottom: 14px;
+  }
+
+  .field input,
+  .field textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px dashed var(--rule);
+    padding: 10px 0;
+    font-family: inherit;
+    font-size: 16px;
+    color: var(--ink);
+    resize: vertical;
+    border-radius: 0;
+  }
+
+  .field input:focus,
+  .field textarea:focus {
+    outline: none;
+    border-bottom: 1px solid var(--forest);
+  }
+
+  .field textarea {
+    min-height: 120px;
+    line-height: 1.6;
+  }
+
+  /* Submit button */
+  .submit-btn {
+    display: inline-flex;
+    align-items: center;
+    background: var(--forest);
+    color: var(--paper);
+    padding: 16px 24px;
+    text-decoration: none;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    transition: background 0.15s ease;
+    border: none;
+    cursor: pointer;
+    margin-top: 16px;
+  }
+
+  .submit-btn:hover {
+    background: var(--forest-deep);
+  }
+
+  .submit-btn .arrow {
+    margin-left: 14px;
+    transition: transform 0.15s ease;
+  }
+
+  .submit-btn:hover .arrow {
+    transform: translateX(3px);
+  }
+
+  /* Back link */
+  .back-link {
+    display: inline-block;
+    margin-top: 48px;
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .back-link:hover {
+    color: var(--forest);
+  }
+
+  /* Footer */
+  .footer {
+    padding: 28px 0 56px;
+  }
+
+  .footer-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    font-size: 12px;
+    color: var(--muted);
+    align-items: center;
+  }
+
+  .footer a {
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .footer a:hover {
+    color: var(--forest);
+  }
+
+  .footer .col-center {
+    text-align: center;
+  }
+
+  .footer .col-right {
+    text-align: right;
+  }
+
+  /* Mobile */
+  @media (max-width: 640px) {
+    .container {
+      padding: 0 24px;
+    }
+
+    .header {
+      padding: 24px 0 16px;
+    }
+
+    .contact-section {
+      padding: 56px 0 64px;
+    }
+
+    .contact-section .sub {
+      margin-bottom: 40px;
+    }
+
+    .field {
+      margin-bottom: 28px;
+    }
+
+    .field input,
+    .field textarea {
+      font-size: 15.5px;
+    }
+
+    .footer-inner {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    .footer .col-center,
+    .footer .col-right {
+      text-align: left;
+    }
+
+    .submit-btn {
+      padding: 14px 20px;
+      font-size: 13px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="container">
+    <a href="index.html" class="wordmark"><span class="slash">//</span>bamyazi</a>
+  </div>
+</header>
+
+<section class="contact-section">
+  <div class="container">
+    <div class="label">[ get in touch ]</div>
+
+    <h1>Tell us what's going on.</h1>
+
+    <p class="sub">Drop a few details and we'll come back to you within a day or two.</p>
+
+    <!--
+      Form uses Netlify Forms - works automatically when deployed to Netlify.
+      No setup needed. Submissions appear at: app.netlify.com -> your site -> Forms.
+      To use a different backend instead (e.g. Formspree), remove the data-netlify
+      attribute and the hidden form-name input, then add action="YOUR_ENDPOINT".
+    -->
+    <form class="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="contact">
+      <p style="display:none;"><label>Don't fill this out: <input name="bot-field"></label></p>
+      <div class="field">
+        <label for="name">[ your name ]</label>
+        <input type="text" id="name" name="name" required autocomplete="name">
+      </div>
+
+      <div class="field">
+        <label for="email">[ email ]</label>
+        <input type="email" id="email" name="email" required autocomplete="email">
+      </div>
+
+      <div class="field">
+        <label for="company">[ company ]</label>
+        <input type="text" id="company" name="company" autocomplete="organization">
+      </div>
+
+      <div class="field">
+        <label for="message">[ what's going on with AI at your company? ]</label>
+        <textarea id="message" name="message" rows="6" required></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn">send<span class="arrow">→</span></button>
+    </form>
+
+    <a href="index.html" class="back-link">← back to bamyazi</a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div><span class="slash">//</span>bamyazi</div>
+      <div class="col-center"><a href="https://ollieonwork.com"><span class="slash">//</span>ollie on work →</a></div>
+      <div class="col-right">london <span class="slash">/</span> 2026</div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
