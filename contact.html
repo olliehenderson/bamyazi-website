@@ -169,6 +169,17 @@
     transform: translateX(3px);
   }
 
+  .submit-btn:disabled {
+    background: var(--muted);
+    cursor: not-allowed;
+  }
+
+  .form-error {
+    margin-top: 20px;
+    font-size: 13px;
+    color: #8B1F1F;
+  }
+
   /* Back link */
   .back-link {
     display: inline-block;
@@ -268,36 +279,47 @@
 
 <section class="contact-section">
   <div class="container">
-    <div class="label">[ get in touch ]</div>
+    <div id="form-state-default">
+      <div class="label">[ get in touch ]</div>
 
-    <h1>Tell us what's going on.</h1>
+      <h1>Tell us what's going on.</h1>
 
-    <p class="sub">Drop a few details and we'll come back to you within a day or two.</p>
+      <p class="sub">Drop a few details and we'll come back to you within a day or two.</p>
 
-    <form class="contact-form" method="POST" action="https://formspree.io/f/xkoyapzg">
-      <input type="hidden" name="_subject" value="New enquiry via bamyazi.com">
-      <div class="field">
-        <label for="name">[ your name ]</label>
-        <input type="text" id="name" name="name" required autocomplete="name">
-      </div>
+      <form id="contact-form" class="contact-form" method="POST" action="https://formspree.io/f/xkoyapzg">
+        <input type="hidden" name="_subject" value="New enquiry via bamyazi.com">
+        <div class="field">
+          <label for="name">[ your name ]</label>
+          <input type="text" id="name" name="name" required autocomplete="name">
+        </div>
 
-      <div class="field">
-        <label for="email">[ email ]</label>
-        <input type="email" id="email" name="email" required autocomplete="email">
-      </div>
+        <div class="field">
+          <label for="email">[ email ]</label>
+          <input type="email" id="email" name="email" required autocomplete="email">
+        </div>
 
-      <div class="field">
-        <label for="company">[ company ]</label>
-        <input type="text" id="company" name="company" autocomplete="organization">
-      </div>
+        <div class="field">
+          <label for="company">[ company ]</label>
+          <input type="text" id="company" name="company" autocomplete="organization">
+        </div>
 
-      <div class="field">
-        <label for="message">[ what's going on with AI at your company? ]</label>
-        <textarea id="message" name="message" rows="6" required></textarea>
-      </div>
+        <div class="field">
+          <label for="message">[ what's going on with AI at your company? ]</label>
+          <textarea id="message" name="message" rows="6" required></textarea>
+        </div>
 
-      <button type="submit" class="submit-btn">send<span class="arrow">→</span></button>
-    </form>
+        <button type="submit" class="submit-btn">send<span class="arrow">→</span></button>
+        <p id="form-error" class="form-error" hidden>Something went wrong. Please try again, or email us directly.</p>
+      </form>
+    </div>
+
+    <div id="form-state-success" hidden>
+      <div class="label">[ sent ]</div>
+
+      <h1>Thanks — message received.</h1>
+
+      <p class="sub">We'll come back to you within a day or two.</p>
+    </div>
 
     <a href="index.html" class="back-link">← back to bamyazi</a>
   </div>
@@ -312,6 +334,42 @@
     </div>
   </div>
 </footer>
+
+<script>
+  const form = document.getElementById('contact-form');
+  const defaultState = document.getElementById('form-state-default');
+  const successState = document.getElementById('form-state-success');
+  const errorEl = document.getElementById('form-error');
+  const submitBtn = form.querySelector('.submit-btn');
+  const submitBtnHTML = submitBtn.innerHTML;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    errorEl.hidden = true;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'sending...';
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (response.ok) {
+        defaultState.hidden = true;
+        successState.hidden = false;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        throw new Error('submit-failed');
+      }
+    } catch (err) {
+      errorEl.hidden = false;
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = submitBtnHTML;
+    }
+  });
+</script>
 
 </body>
 </html>
